@@ -84,4 +84,18 @@ class PostsController extends Controller
     {
         //
     }
+
+    public function contact() {
+        $people = ['Rely', 'Coolbastian', 'LeeJay', 'BoShin', 'Jihe', 'Monzi'];
+        return view('contact', compact('people'));
+    }
+
+    public function show_post($id) {
+        // return view('post')->with('id', $id);
+        return view('post', compact('id'));
+    }
+
+    public function post_detail($id, $name, $password) {
+        return view('post_detail', compact('id','name','password'));
+    }
 }

@@ -45,3 +45,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/post/{id}', '\App\Http\Controllers\PostsController@index');
 
 Route::resource('posts', '\App\Http\Controllers\PostsController');
+
+Route::get('/contact', '\App\Http\Controllers\PostsController@contact');
+
+Route::get('post/{id}', '\App\Http\Controllers\PostsController@show_post');
+
+Route::get('post/{id}/{name}/{password}', '\App\Http\Controllers\PostsController@post_detail');
