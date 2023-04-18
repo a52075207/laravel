@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Country;
+use App\Models\Photo;
+use App\Models\Video;
+use App\Models\Tag;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -167,8 +172,111 @@ use App\Models\Post;
 //     Post::withTrashed()->where('is_admin', 0)->restore();
 // });
 
-Route::get('/forcedelete', function() {
-    // Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
-    $posts = Post::onlyTrashed()->where('is_admin', 0)->get();
-    return $posts;
+// Route::get('/forcedelete', function() {
+//     // Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
+//     $posts = Post::onlyTrashed()->where('is_admin', 0)->get();
+//     return $posts;
+// });
+
+
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+
+// One to one relationship
+// Route::get('/user/{id}/post', function($id) {
+//     return User::find($id)->post;
+// });
+
+// Route::get('/post/{id}/user', function($id) {
+//     return Post::find($id)->user->name;
+// });
+
+
+// One to many relationship
+// Route::get('/posts', function() {
+//     $user = User::find(1);
+
+//     foreach($user->posts as $post) {
+//         echo $post->title."<br>";
+//     }
+// });
+
+
+// Many to many relationship
+// Route::get('/user/{id}/role', function($id) {
+//     // $user = User::find($id)->roles()->orderBy('id', 'desc')->get();
+//     $user = User::find($id);
+
+//     foreach($user->roles as $role) {
+//         echo $role->pivot;
+//     }
+//     // return $user;
+// });
+
+// Accessing the intermeidate table / pivot
+// Route::get('/user/pivot', function() {
+//     $user = User::find(1);
+
+//     foreach($user->roles as $role) {
+//         echo $role->pivot->created_at;
+//     }
+// });
+
+
+// Route::get('/user/country', function() {
+//     $country = Country::find(3);
+
+//     foreach($country->posts as $post) {
+//         return $post;
+//     }
+// });
+
+
+// Polymorphic relationship
+// Route::get('/user/photos', function() {
+//     $user = User::find(1);
+//     foreach($user->photos as $photo) {
+//         echo $photo->path."<br>";
+//     }
+// });
+
+// Route::get('/post/photos', function() {
+//     $post = Post::find(1);
+//     foreach($post->photos as $photo) {
+//         return $photo->path;
+//     }
+// });
+
+// Route::get('/photo/{id}', function($id) {
+//     $photo = Photo::findOrFail($id);
+
+//     return $photo->imageable;
+// });
+
+// Polymorphic Many to Many relationship
+Route::get('/video/{id}/tag', function($id) {
+    $video = Video::find($id);
+    foreach($video->tags as $tag) {
+        echo $tag->name."<br>";
+    }
+});
+
+Route::get('/post/{id}/tag', function($id) {
+    $post = Post::find($id);
+    foreach($post->tags as $tag) {
+        echo $tag->name."<br>";
+    }
+});
+
+Route::get('/tag/{id}/video', function($id) {
+    $tag = Tag::find($id);
+    foreach($tag->videos as $video) {
+        echo $video."<br>";
+    }
+    foreach($tag->posts as $post) {
+        echo $post."<br>";
+    }
 });
